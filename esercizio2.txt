@@ -1,0 +1,22 @@
+1) Conta gli ospiti raggruppandoli per anno di nascita
+SELECT COUNT(ospiti.id), YEAR(ospiti.date_of_birth) FROM `ospiti` GROUP BY YEAR(ospiti.date_of_birth)
+
+2) Somma i prezzi dei pagamenti raggruppandoli per status
+SELECT pagamenti.status, SUM(pagamenti.price) FROM `pagamenti` GROUP BY pagamenti.status
+
+3) Conta quante volte è stata prenotata ogni stanza
+SELECT prenotazioni.stanza_id, COUNT(prenotazioni.id) FROM `prenotazioni` GROUP BY prenotazioni.stanza_id
+
+4) Stampare tutti gli ospiti per ogni prenotazione
+SELECT prenotazioni_has_ospiti.prenotazione_id, ospiti.id, ospiti.name, ospiti.lastname FROM `prenotazioni_has_ospiti` INNER JOIN `ospiti` ON prenotazioni_has_ospiti.ospite_id = ospiti.id
+
+
+5) Stampare Nome, Cognome, Prezzo e Pagante per tutte le prenotazioni fatte a Maggio 2018
+SELECT pagamenti.prenotazione_id, paganti.name AS "pagante_name", paganti.lastname AS "pagante_lastname", ospiti.name AS "ospite_name", ospiti.lastname "ospite_lastname", pagamenti.price FROM `paganti` INNER JOIN `pagamenti` ON paganti.id = pagamenti.pagante_id INNER JOIN `prenotazioni_has_ospiti` ON pagamenti.prenotazione_id = prenotazioni_has_ospiti.prenotazione_id INNER JOIN `ospiti` ON ospiti.id = prenotazioni_has_ospiti.ospite_id WHERE MONTH(prenotazioni_has_ospiti.created_at) = "05" and YEAR(prenotazioni_has_ospiti.created_at) = "2018"
+
+
+6) Fai la somma di tutti i prezzi delle prenotazioni per le stanze del primo piano
+
+
+
+7) Prendi i dati di fatturazione per la prenotazione con id=7
