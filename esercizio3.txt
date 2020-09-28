@@ -1,0 +1,24 @@
+1.Fai un'analisi per vedere se ci sono ore in cui le prenotazioni sono più frequenti.
+
+SELECT COUNT(prenotazioni.id), HOUR(prenotazioni.created_at) 
+FROM prenotazioni 
+GROUP BY HOUR(prenotazioni.created_at) 
+ORDER BY COUNT(prenotazioni.id) DESC
+
+2.Le stanze sono state tutte prenotate almeno una volta? (Visualizzare le stanze non ancora prenotate)
+
+SELECT prenotazioni.id, stanze.room_number
+FROM stanze
+INNER JOIN prenotazioni
+ON prenotazioni.stanza_id = stanze.id
+WHERE NOT prenotazioni.stanza_id like concat('%', stanze.id, '%') SBAGLIATO!!!
+
+
+3.Come si chiamano gli ospiti che hanno fatto più di due prenotazioni?
+
+SELECT COUNT(prenotazioni_has_ospiti.ospite_id), ospiti.id, ospiti.name, ospiti.lastname
+FROM prenotazioni_has_ospiti
+INNER JOIN ospiti
+ON prenotazioni_has_ospiti.ospite_id = ospiti.id
+GROUP BY ospiti.id
+HAVING COUNT(prenotazioni_has_ospiti.ospite_id) > '2';
